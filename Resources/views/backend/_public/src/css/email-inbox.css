@@ -1,0 +1,24 @@
+.center {
+    text-align: center;
+}
+
+#blauband-mail-inbox .mail-list {
+    margin-top: 40px;
+}
+
+#blauband-mail-inbox #delete-button {
+    margin: 0;
+}
+
+
+/* EKS original overwrite*/
+.mail-select .title-subject{
+    width: 80%;
+    display: inline;
+    float: left;
+    margin-top: 0;
+}
+
+.mail-select .ui-icon {
+    float: right;
+}

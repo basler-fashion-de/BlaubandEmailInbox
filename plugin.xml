@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
+    <label lang="de">Blauband EKS Postfächer</label>
+    <label lang="en">Blauband EKS Inbox</label>
+    <version>1.0.0</version>
+    <copyright>(c) by Blauband GmbH</copyright>
+    <license>proprietary</license>
+    <link>www.blauband.com</link>
+    <author>Blauband GmbH</author>
+
+    <description lang="de">
+        <![CDATA[
+https://myaccount.google.com/lesssecureapps URL um gmail zu aktivieren
+TODO:
+Wie bekomm ich die Emails in unsere DB ohne alles lahm zu legen. (CronJob)
+
+        ]]>
+    </description>
+
+    <description lang="en">
+        <![CDATA[
+
+        ]]>
+    </description>
+
+    <compatibility minVersion="5.2.7" />
+
+    <changelog version="1.0.0">
+        <changes lang="de">Erste Veröffentlichung 'Blauband EKS Postfächer'</changes>
+        <changes lang="en">First release 'Blauband EKS Inbox'</changes>
+    </changelog>
+
+    <requiredPlugins>
+        <requiredPlugin pluginName="BlaubandEmail" minVersion="1.2.5"/>
+    </requiredPlugins>
+</plugin>
