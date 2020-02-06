@@ -10,6 +10,28 @@
     margin: 0;
 }
 
+.select2--order,
+.select2--customer {
+    display: none;
+}
+
+.select2 {
+    width: 90% !important;
+    margin-bottom: 20px !important;
+}
+
+.select2-container--default,
+.select2-selection--single {
+    border-color: #E1E1E1 !important;
+}
+
+.save-relationship {
+    width: 8% !important;
+    float: right;
+    background: white !important;
+    margin-top: -1px;
+}
+
 
 /* EKS original overwrite*/
 .mail-select .title-subject{

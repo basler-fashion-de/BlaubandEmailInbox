@@ -1,6 +1,7 @@
 $(function () {
   registerButtons()
   registerSelect()
+  registerAssignButtons()
 })
 
 function registerButtons () {
@@ -51,8 +52,63 @@ function registerButtons () {
 
 function registerSelect () {
   $(plugin_selector + ' #connectionSelect').on('selectmenuchange', function () {
-    location.href = $(this).find('option:selected').data('url');
+    location.href = $(this).find('option:selected').data('url')
   })
+}
+
+function registerAssignButtons () {
+  $('.select2').each(function () {
+    $(this).select2(
+      {
+        ajax: {
+          url: $(this).data('url'),
+          dataType: 'json',
+          data: function (params) {
+            var query = {
+              term: params.term,
+              page: params.page || 1
+            }
+
+            return query;
+          },
+          processResults: function (data, params) {
+            params.page = params.page || 1;
+
+            return {
+              results: data.data.result,
+              pagination: {
+                more: (params.page * 30) < data.data.total
+              }
+            };
+          },
+        },
+        placeholder: searchMessage,
+        minimumInputLength: 3,
+      }
+    );
+  });
+
+  $('.save-relationship').each(function () {
+    var mailId = $(this).data('mail-id');
+    var relatedSelectSelector = $(this).data('related-select');
+    var selectValue = $('.' + relatedSelectSelector + ' option:selected').val()
+
+    var formData = new FormData()
+    formData.append('mailId', mailId)
+    formData.append('valueId', selectValue)
+
+    sendAjax(url, formData, function (response) {
+      if (response.responseJSON.success) {
+        alert(successSaveMessage)
+        $(plugin_selector + ' #back-button').click()
+      } else {
+        showErrorPanel(response.responseJSON.data.message)
+      }
+    })
+
+  });
+
+
 }
 
 function fetchInboxInputFormData () {

@@ -60,7 +60,7 @@ class InboxService
             throw new \Exception("No connection settings found by id '$id'");
         }
 
-        if($asArray){
+        if ($asArray) {
             return $this->modelManager->toArray($connection);
         }
 
@@ -90,7 +90,7 @@ class InboxService
 
         if (!$component->isConnected()) {
             throw new \Exception(
-                "Could not connect to mailbox '" . $connection->getName() . "' ".imap_last_error()
+                "Could not connect to mailbox '" . $connection->getName() . "' " . imap_last_error()
             );
         }
 
@@ -189,18 +189,18 @@ class InboxService
         $mail->setSubject($header->subject);
         $mail->setFrom($header->from);
         $mail->setTo($header->to);
-        $mail->setCreateDate( date('Y-m-d H:i:s', strtotime($header->date)));
+        $mail->setCreateDate(date('Y-m-d H:i:s', strtotime($header->date)));
         $mail->setBody($body);
         $mail->setIsHtml(true);
 
-        if($attachment){
+        if ($attachment) {
             $mail->setAttachments(json_encode($attachment));
         }
 
         $mail->setCustomer($this->getCustomerByEmail($header->from));
-        $mail->setOrder($this->getOrderByContent($header->from, $header->subject.' '.$body));
+        $mail->setOrder($this->getOrderByContent($header->from, $header->subject . ' ' . $body));
 
-        if($this->shouldSave($mail)){
+        if ($this->shouldSave($mail)) {
             $this->modelManager->persist($mail);
             $this->modelManager->flush($mail);
         }
@@ -212,7 +212,8 @@ class InboxService
      * @param $mail
      * @return Customer|null
      */
-    private function getCustomerByEmail($mail){
+    private function getCustomerByEmail($mail)
+    {
         preg_match('/.*<(.*)>/m', $mail, $matches);
         $repository = $this->modelManager->getRepository(Customer::class);
         return $repository->findOneBy(['email' => $matches[1]]);
@@ -222,12 +223,12 @@ class InboxService
     {
         $costumer = $this->getCustomerByEmail($mail);
 
-        if($costumer){
+        if ($costumer) {
             $orders = $costumer->getOrders();
 
             /** @var Order $order */
-            foreach ($orders as $order){
-                if(strpos($content, $order->getNumber()) !== false){
+            foreach ($orders as $order) {
+                if (strpos($content, $order->getNumber()) !== false) {
                     return $order;
                 }
             }
@@ -238,18 +239,16 @@ class InboxService
 
     private function shouldSave(LoggedMail $mail)
     {
-        if($mail->getCustomer() || $mail->getOrder()){
-            $loggedMailRepository = $this->modelManager->getRepository(LoggedMail::class);
-            $loggedMail = $loggedMailRepository->findOneBy([
-                'from' => $mail->getFrom(),
-                'to' => $mail->getTo(),
-                'subject' => $mail->getSubject(),
-                'createDate' => $mail->getCreateDate(),
-            ]);
+        $loggedMailRepository = $this->modelManager->getRepository(LoggedMail::class);
+        $loggedMail = $loggedMailRepository->findOneBy([
+            'from' => $mail->getFrom(),
+            'to' => $mail->getTo(),
+            'subject' => $mail->getSubject(),
+            'createDate' => $mail->getCreateDate(),
+        ]);
 
-            if(!$loggedMail){
-                return true;
-            }
+        if (!$loggedMail) {
+            return true;
         }
 
         return false;

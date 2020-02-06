@@ -7,5 +7,10 @@
         <service class="BlaubandEmailInbox\Services\InboxService" id="blauband_email_inbox.services.inbox_service">
             <argument id="models" type="service"/>
         </service>
+
+        <service class="BlaubandEmailInbox\Services\SearchService" id="blauband_email_inbox.services.search_service">
+            <argument id="dbal_connection" type="service"/>
+        </service>
+
     </services>
 </container>
