@@ -11,10 +11,7 @@
 
     <description lang="de">
         <![CDATA[
-https://myaccount.google.com/lesssecureapps URL um gmail zu aktivieren
-TODO:
-Wie bekomm ich die Emails in unsere DB ohne alles lahm zu legen. (CronJob)
-
+        CronJob: Es wird ein CronJob angelegt der die tages aktuellen Emails herunterlädt.
         ]]>
     </description>
 
@@ -32,6 +29,6 @@ Wie bekomm ich die Emails in unsere DB ohne alles lahm zu legen. (CronJob)
     </changelog>
 
     <requiredPlugins>
-        <requiredPlugin pluginName="BlaubandEmail" minVersion="1.2.5"/>
+        <requiredPlugin pluginName="BlaubandEmail" minVersion="1.2.6"/>
     </requiredPlugins>
 </plugin>

@@ -19,6 +19,18 @@ class InboxComponent
         return ($this->connection);
     }
 
+    public function getSortedHeadersByToday(){
+        $date = date('j F Y');
+        $msgs = imap_search($this->connection,'ON "'.$date.'"' );
+        $result = imap_fetch_overview($this->connection, implode($msgs, ','), 0);
+
+        if (false === is_array($result)) {
+            return false;
+        }
+
+        return  array('res' => $result);
+    }
+
     public function getSortedHeaders($page = 1, $per_page = 25, $sort = ['desc', 'date'])
     {
         $limit = ($per_page * $page);
@@ -106,7 +118,7 @@ class InboxComponent
         if (count($structure->parts) > 0) {
             foreach ($structure->parts as $index => $part) {
                 $p = $this->parsePart($header->msgno, $index + 1, $part);
-                if (array_key_exists('text', $p)) $partsArray['text'] = $p['text'];
+                if (array_key_exists('text', $p) && !empty($p['text'])) $partsArray['text'] = $p['text'];
                 if (array_key_exists('attachment', $p)) $partsArray['attachment'][] = $p['attachment'];
             }
         } else {
@@ -172,7 +184,6 @@ class InboxComponent
 
         return $result;
     }
-
 
     private function inbox_login($type, $host, $port, $user, $pass, $folder, $ssl)
     {

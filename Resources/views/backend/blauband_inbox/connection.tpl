@@ -14,7 +14,7 @@
                 {s namespace="blauband/mail" name="back"}{/s}
             </button>
 
-            <button id="save-button" class="blue" data-url="{url action="crud"}">
+            <button id="save-button" class="blue" data-ajax-url="{url action="crud"}">
                 {s namespace="blauband/mail" name="saveConnection"}{/s}
             </button>
         </div>

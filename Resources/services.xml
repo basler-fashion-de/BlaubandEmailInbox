@@ -7,5 +7,21 @@
         <service class="BlaubandEmailInbox\Services\InboxService" id="blauband_email_inbox.services.inbox_service">
             <argument id="models" type="service"/>
         </service>
+
+        <service class="BlaubandEmailInbox\Services\SearchService" id="blauband_email_inbox.services.search_service">
+            <argument id="models" type="service"/>
+            <argument id="dbal_connection" type="service"/>
+        </service>
+
+        <service class="BlaubandEmailInbox\Services\RelationshipService" id="blauband_email_inbox.services.relationship_service">
+            <argument id="models" type="service"/>
+            <argument id="snippets" type="service"/>
+        </service>
+
+
+        <service class="BlaubandEmailInbox\Subscribers\CronJob" id="blauband_email_inbox.subscribers.cron_job">
+            <argument id="blauband_email_inbox.services.inbox_service" type="service"/>
+            <tag name="shopware.event_subscriber"/>
+        </service>
     </services>
 </container>

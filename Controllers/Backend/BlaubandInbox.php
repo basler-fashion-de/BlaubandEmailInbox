@@ -1,11 +1,12 @@
 <?php
 
+use BlaubandEmailInbox\Controllers\Backend\BlaubandController;
 use BlaubandEmail\BlaubandEmail;
 use BlaubandEmailInbox\Models\InboxConnection;
 use BlaubandEmailInbox\Services\InboxService;
 use Shopware\Components\CSRFWhitelistAware;
 
-class Shopware_Controllers_Backend_BlaubandInbox extends \Enlight_Controller_Action implements CSRFWhitelistAware
+class Shopware_Controllers_Backend_BlaubandInbox extends BlaubandController implements CSRFWhitelistAware
 {
     public function getWhitelistedCSRFActions()
     {
@@ -32,7 +33,7 @@ class Shopware_Controllers_Backend_BlaubandInbox extends \Enlight_Controller_Act
         /** @var InboxService $inboxService */
         $inboxService = $this->get('blauband_email_inbox.services.inbox_service');
         /** @var InboxConnection[] $inboxConnections */
-        $inboxConnections = $inboxService->getInboxConnections();
+        $inboxConnections = $inboxService->getInboxConnections(true);
 
         $this->view->assign('inboxConnections', $inboxConnections);
         $this->view->assign('isOwnFrame', true);
@@ -126,18 +127,6 @@ class Shopware_Controllers_Backend_BlaubandInbox extends \Enlight_Controller_Act
         }
 
         $this->sendJson($connection);
-    }
-
-    /**
-     * @param $data
-     * @param bool $succes
-     * @throws Exception
-     */
-    private function sendJson($data, $succes = true)
-    {
-        $this->Front()->Plugins()->ViewRenderer()->setNoRender();
-        $this->Response()->setBody(json_encode(['success' => $succes, 'data' => $data]));
-        $this->Response()->setHeader('Content-type', 'application/json', true);
     }
 
     /**
