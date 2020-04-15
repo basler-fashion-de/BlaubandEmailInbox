@@ -51,6 +51,11 @@ class RelationshipService
         }
 
         $mail->setOrder($order);
+
+        if($order != null){
+            $mail->setCustomer($order->getCustomer());
+        }
+
         $this->modelManager->flush($mail);
 
         return $orderId;

@@ -1,9 +1,34 @@
 $(function () {
+    registerEventTabSelect();
+
     registerButtons();
     registerSelect();
     registerAssignButtons();
     registerFilterInputs();
 });
+
+function registerEventTabSelect(){
+
+    if(Cookies.get('blauband_selected_tab')){
+        $('div[class^="mail--list-item--state--"][data-mail-id='+Cookies.get('blauband_selected_tab')+']').find('a').click();
+    }
+    $('div[class^="mail--list-item--state--"]').on('click', function () {
+        Cookies.set('blauband_selected_tab', $(this).data('mail-id'));
+    });
+
+    $('.mail--list-item--state--todo').on('click', function () {
+        var me = this;
+        var url = $(this).data('mail-url');
+        sendAjax(url, [], function (response) {
+            if (response.responseJSON.success) {
+                $(me).addClass('selected');
+                $(me).find('.state-icon.ui-icon')
+                    .removeClass('ui-icon-notice')
+                    .addClass('ui-icon-check')
+            }
+        })
+    });
+}
 
 function registerButtons() {
     $('*[data-url]').on('click', function () {
@@ -44,8 +69,23 @@ function registerButtons() {
         var url = $(this).data('ajax-url');
         var editId = $(plugin_selector + ' #connectionSelect :selected').val();
         location.href = $(this).data('url') + '/id/' + editId
-    })
+    });
 
+    $(plugin_selector + ' [data-state-change-url]').on('click', function () {
+        var url = $(this).data('state-change-url');
+
+        sendAjax(url, [], function (response) {
+            if (response.responseJSON.success) {
+                location.reload();
+            } else {
+                showErrorPanel(response.responseJSON.data.message)
+            }
+        })
+    });
+
+    $(plugin_selector + ' .reply-mail--button').on('click', function () {
+        var mailId = $(this).data('mail-id');
+    })
 }
 
 function registerSelect() {
@@ -84,26 +124,28 @@ function registerAssignButtons() {
                 minimumInputLength: 3,
             }
         )
-    });
 
-    $(plugin_selector + ' .save-relationship').on('click', function () {
-        var url = $(this).data('ajax-url');
-        var mailId = $(this).data('mail-id');
-        var relatedSelectSelector = $(this).data('related-select');
-        var selectValue = $('.' + relatedSelectSelector + ' option:selected').val();
+        $(this).on('select2:select', function (e) {
+            var url = $(this).data('save-url');
+            var mailId = $(this).data('mail-id');
+            var selectValue = $(this).val();
 
-        var formData = new FormData();
-        formData.append('mailId', mailId);
-        formData.append('valueId', selectValue);
+            var formData = new FormData();
+            formData.append('mailId', mailId);
+            formData.append('valueId', selectValue);
 
-        sendAjax(url, formData, function (response) {
-            if (response.responseJSON.success) {
-                alert(successSaveMessage);
-                location.reload();
-            } else {
-                showErrorPanel(response.responseJSON.data.message)
-            }
-        })
+            $(this).prop('disabled', true);
+
+            sendAjax(url, formData, function (response) {
+                $(this).prop('disabled', false);
+
+                if (response.responseJSON.success) {
+                    location.reload();
+                } else {
+                    showErrorPanel(response.responseJSON.data.message)
+                }
+            })
+        });
     });
 
     $(plugin_selector + ' .delete-relationship').on('click', function () {
@@ -115,7 +157,6 @@ function registerAssignButtons() {
 
         sendAjax(url, formData, function (response) {
             if (response.responseJSON.success) {
-                alert(successSaveMessage);
                 location.reload();
             } else {
                 showErrorPanel(response.responseJSON.data.message)

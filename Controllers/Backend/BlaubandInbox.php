@@ -36,7 +36,6 @@ class Shopware_Controllers_Backend_BlaubandInbox extends BlaubandController impl
         $inboxConnections = $inboxService->getInboxConnections(true);
 
         $this->view->assign('inboxConnections', $inboxConnections);
-        $this->view->assign('isOwnFrame', true);
 
         $id = $this->request->getParam('id');
 

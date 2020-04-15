@@ -57,12 +57,6 @@
                     </button>
                 </div>
             </div>
-
-
-            <div class="mail-list" id="mails">
-                {include file="backend/blauband_email/paging.tpl"}
-                {include file="backend/blauband_inbox/mails.tpl"}
-            </div>
         {else}
             <div class="center">
                 {s namespace="blauband/mail" name="noConnections"}{/s}

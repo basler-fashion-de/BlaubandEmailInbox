@@ -36,18 +36,24 @@ class Shopware_Controllers_Backend_BlaubandOverview extends BlaubandController i
         $offset = $this->request->getParam('offset', 0);
 
         $relationshipSelect = $this->request->getParam('relationshipSelect', SearchService::RELATIONSHIP_STATE_ALL);
-        $isDone = $this->request->getParam('stateDone') !== 'false';
-        $isInProgress = $this->request->getParam('stateInProgress') !== 'false';
-        $isTodo = $this->request->getParam('stateTodo') !== 'false';
         $isSystemMail = $this->request->getParam('showSystemMail') === 'true';
+
+        $searchDone = false;
+        $searchProgress = $isInProgress = $this->request->getParam('stateInProgress') === 'true';
+        $searchTodo = $isTodo = $this->request->getParam('stateTodo') === 'true';
+
+        //Wenn nichts ausgewählt, dann alle
+        if(!$isInProgress && !$isTodo){
+            $searchProgress = $searchTodo = $searchDone = true;
+        }
 
         list($mails, $total) = $searchService->searchLoggedMail(
             $limit,
             $offset,
             $relationshipSelect,
-            $isDone,
-            $isInProgress,
-            $isTodo,
+            $searchDone,
+            $searchProgress,
+            $searchTodo,
             $isSystemMail
         );
 
@@ -57,7 +63,6 @@ class Shopware_Controllers_Backend_BlaubandOverview extends BlaubandController i
         $this->view->assign('total', $total);
 
         $this->view->assign('relationshipSelect', $relationshipSelect);
-        $this->view->assign('stateDone', $isDone);
         $this->view->assign('stateInProgress', $isInProgress);
         $this->view->assign('stateTodo', $isTodo);
         $this->view->assign('showSystemMail', $isSystemMail);

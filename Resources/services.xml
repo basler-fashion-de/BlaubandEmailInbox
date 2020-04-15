@@ -18,6 +18,16 @@
             <argument id="snippets" type="service"/>
         </service>
 
+        <service class="BlaubandEmailInbox\Services\StateService" id="blauband_email_inbox.services.state_service">
+            <argument id="models" type="service"/>
+            <argument id="snippets" type="service"/>
+        </service>
+
+        <service class="BlaubandEmailInbox\Subscribers\BlaubandEmail" id="blauband_email_inbox.subscribers.blauband_email">
+            <argument id="models" type="service"/>
+            <argument>%blauband_email_inbox.plugin_dir%</argument>
+            <tag name="shopware.event_subscriber"/>
+        </service>
 
         <service class="BlaubandEmailInbox\Subscribers\CronJob" id="blauband_email_inbox.subscribers.cron_job">
             <argument id="blauband_email_inbox.services.inbox_service" type="service"/>

@@ -3,8 +3,8 @@
     <entries>
         <entry>
             <name>BlaubandMailbox</name>
-            <label lang="de">EKS Postfächer</label>
-            <label lang="en">EKS Inboxes</label>
+            <label lang="de">EKS Verbindungen</label>
+            <label lang="en">EKS Connections</label>
             <controller>BlaubandInbox</controller>
             <action>index</action>
             <class>\" style=\"background: url('/custom/plugins/BlaubandEmail/plugin.png') no-repeat scroll 0 0 transparent !important;</class>
@@ -19,7 +19,7 @@
             <controller>BlaubandOverview</controller>
             <action>index</action>
             <class>\" style=\"background: url('/custom/plugins/BlaubandEmail/plugin.png') no-repeat scroll 0 0 transparent !important;</class>
-            <parent identifiedBy="controller">ConfigurationMenu</parent>
+            <parent identifiedBy="controller">Customer</parent>
             <onclick>Shopware.ModuleManager.createSimplifiedModule("BlaubandOverview", { "title": "EKS Email Übersicht"})</onclick>
         </entry>
     </entries>
