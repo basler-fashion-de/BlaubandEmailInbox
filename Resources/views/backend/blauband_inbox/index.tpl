@@ -7,6 +7,9 @@
     <script type="text/javascript" src="{link file="backend/_public/src/js/email-inbox-conf.js"}"></script>
     <script type="text/javascript" src="{link file="backend/_public/src/js/email-inbox-events.js"}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
 
@@ -48,7 +51,7 @@
                 <div class="two-cols">
                     <label>&nbsp;</label>
                     <button id="edit-button" class="blue"
-                            data-ajax-url="{url action="connection"}">
+                            data-edit-url="{url action="connection"}">
                         {s namespace="blauband/mail" name="editConnection"}{/s}
                     </button>
                     <button id="delete-button" class="blue"

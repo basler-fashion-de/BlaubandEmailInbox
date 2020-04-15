@@ -66,9 +66,9 @@ function registerButtons() {
     });
 
     $(plugin_selector + ' #edit-button').on('click', function () {
-        var url = $(this).data('ajax-url');
+        var url = $(this).data('edit-url');
         var editId = $(plugin_selector + ' #connectionSelect :selected').val();
-        location.href = $(this).data('url') + '/id/' + editId
+        location.href = url + '/id/' + editId
     });
 
     $(plugin_selector + ' [data-state-change-url]').on('click', function () {
