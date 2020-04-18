@@ -12,11 +12,20 @@ class BlaubandEmail implements SubscriberInterface
      * @var ModelManager
      */
     private $modelManager;
+    /**
+     * @var \Enlight_Components_Snippet_Manager
+     */
+    private $snippets;
     private $pluginDirectory;
 
-    public function __construct(ModelManager $modelManager, $pluginDirectory)
+    public function __construct(
+        ModelManager $modelManager,
+        \Enlight_Components_Snippet_Manager $snippets,
+        $pluginDirectory
+    )
     {
         $this->modelManager = $modelManager;
+        $this->snippets = $snippets;
         $this->pluginDirectory = $pluginDirectory;
     }
 
@@ -60,11 +69,25 @@ class BlaubandEmail implements SubscriberInterface
         $mailContent = strip_tags($mailContent, '<br>');
         $mailContent = str_replace(['<br />', '<br/>', '<br>'], "\n", $mailContent);
 
-        $separator = "\n&nbsp;\n&nbsp;\n------------------------\n&nbsp;\n&nbsp;\n";
+        $startSeparatorText = $this->snippets->getNamespace('blauband/mail')->get('startSeparator');
+        $endSeparatorText = $this->snippets->getNamespace('blauband/mail')->get('endSeparator');
+        $createDateText = $this->snippets->getNamespace('blauband/mail')->get('mailDate');
+        $subjectText = $this->snippets->getNamespace('blauband/mail')->get('mailSubject');
+        $fromText = $this->snippets->getNamespace('blauband/mail')->get('mailFrom');
+        $toText = $this->snippets->getNamespace('blauband/mail')->get('mailTo');
+
+        $startSeparator = "\n&nbsp;\n&nbsp;\n------------$startSeparatorText------------\n&nbsp;\n";
+        $endSeparator = "\n&nbsp;\n&nbsp;\n------------$endSeparatorText------------\n&nbsp;\n";
+
+        $mailHeader = $createDateText . ': ' . date_format( $mail->getCreateDate(),'d M yy H:i:s') . "\n";
+        $mailHeader .= $subjectText . ': ' . $mail->getSubject() . "\n";
+        $mailHeader .= $fromText . ': ' . $mail->getFrom() . "\n";
+        $mailHeader .= $toText . ': ' . $mail->getTo() . "\n";
+        $mailHeader .= "\n&nbsp;\n&nbsp;\n";
 
         $bodyContent = $view->getAssign('bodyContent');
 
-        $view->assign('bodyContent', $bodyContent . $separator . $mailContent);
+        $view->assign('bodyContent', $bodyContent . $startSeparator . $mailHeader . $mailContent . $endSeparator);
         $view->assign('mailId', $mailId);
     }
 }

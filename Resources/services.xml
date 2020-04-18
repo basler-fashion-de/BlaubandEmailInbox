@@ -25,6 +25,7 @@
 
         <service class="BlaubandEmailInbox\Subscribers\BlaubandEmail" id="blauband_email_inbox.subscribers.blauband_email">
             <argument id="models" type="service"/>
+            <argument id="snippets" type="service"/>
             <argument>%blauband_email_inbox.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
