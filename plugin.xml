@@ -21,7 +21,7 @@
         ]]>
     </description>
 
-    <compatibility minVersion="5.2.7" />
+    <compatibility minVersion="5.6.0" />
 
     <changelog version="1.0.0">
         <changes lang="de">Erste Veröffentlichung 'Blauband EKS Postfächer'</changes>
@@ -29,6 +29,6 @@
     </changelog>
 
     <requiredPlugins>
-        <requiredPlugin pluginName="BlaubandEmail" minVersion="1.2.6"/>
+        <requiredPlugin pluginName="BlaubandEmail" minVersion="1.2.8"/>
     </requiredPlugins>
 </plugin>
