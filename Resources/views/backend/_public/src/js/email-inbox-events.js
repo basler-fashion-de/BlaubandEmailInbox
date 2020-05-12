@@ -2,7 +2,6 @@ $(function () {
     registerEventTabSelect();
 
     registerButtons();
-    registerSelect();
     registerAssignButtons();
     registerFilterInputs();
 });
@@ -41,8 +40,7 @@ function registerButtons() {
 
         sendAjax(url, formData, function (response) {
             if (response.responseJSON.success) {
-                alert(successSaveMessage);
-                $(plugin_selector + ' #back-button').click()
+                showInfoPanel(successSaveMessage)
             } else {
                 showErrorPanel(response.responseJSON.data.message)
             }
@@ -57,8 +55,9 @@ function registerButtons() {
 
         sendAjax(url, formData, function (response) {
             if (response.responseJSON.success) {
-                alert(successDeleteMessage);
-                location.reload();
+                showInfoPanel(successDeleteMessage);
+                $(plugin_selector + ' #connectionSelect :selected').remove();
+                $(plugin_selector + ' #connectionSelect').selectmenu("destroy").selectmenu({ style: "dropdown" });
             } else {
                 showErrorPanel(response.responseJSON.data.message)
             }
@@ -85,12 +84,6 @@ function registerButtons() {
 
     $(plugin_selector + ' .reply-mail--button').on('click', function () {
         var mailId = $(this).data('mail-id');
-    })
-}
-
-function registerSelect() {
-    $(plugin_selector + ' #connectionSelect').on('selectmenuchange', function () {
-        location.href = $(this).find('option:selected').data('url')
     })
 }
 
