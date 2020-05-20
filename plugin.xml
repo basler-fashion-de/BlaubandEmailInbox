@@ -9,19 +9,12 @@
     <link>www.blauband.com</link>
     <author>Blauband GmbH</author>
 
-    <description lang="de">
-        <![CDATA[
-        CronJob: Es wird ein CronJob angelegt der die tages aktuellen Emails herunterlädt.
-        ]]>
-    </description>
+    <compatibility minVersion="5.2.7" />
 
-    <description lang="en">
-        <![CDATA[
-
-        ]]>
-    </description>
-
-    <compatibility minVersion="5.6.0" />
+    <changelog version="1.1.0">
+        <changes lang="de">Kompatibilität zu älteren Shopware Versionen erweitert</changes>
+        <changes lang="en">Compatibility to older Shopware versions</changes>
+    </changelog>
 
     <changelog version="1.0.0">
         <changes lang="de">Erste Veröffentlichung 'Blauband EKS Postfächer'</changes>

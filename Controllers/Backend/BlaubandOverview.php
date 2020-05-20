@@ -29,6 +29,9 @@ class Shopware_Controllers_Backend_BlaubandOverview extends BlaubandController i
 
     public function indexAction()
     {
+        $shopwareVersion = Shopware()->Config()->get( 'Version' );
+        $showSystemMailFilter = version_compare($shopwareVersion, '5.6.0', '>=');
+
         /** @var SearchService $searchService */
         $searchService = $this->get('blauband_email_inbox.services.search_service');
 
@@ -54,7 +57,7 @@ class Shopware_Controllers_Backend_BlaubandOverview extends BlaubandController i
             $searchDone,
             $searchProgress,
             $searchTodo,
-            $isSystemMail
+            $isSystemMail || !$showSystemMailFilter
         );
 
         $this->view->assign('mails', $mails);
@@ -66,5 +69,7 @@ class Shopware_Controllers_Backend_BlaubandOverview extends BlaubandController i
         $this->view->assign('stateInProgress', $isInProgress);
         $this->view->assign('stateTodo', $isTodo);
         $this->view->assign('showSystemMail', $isSystemMail);
+
+        $this->view->assign('showSystemMailFilter', $showSystemMailFilter);
     }
 }

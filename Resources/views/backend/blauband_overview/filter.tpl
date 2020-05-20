@@ -19,20 +19,25 @@
             <input class="filter-input" type="checkbox" id="stateTodo" name="stateTodo"{if $stateTodo} checked{/if}>
             <label class="checkbox" for="stateTodo">{s namespace="blauband/mail" name="todo"}{/s}</label>
 
-            <input class="filter-input" type="checkbox" id="stateInProgress" name="stateInProgress"{if $stateInProgress} checked{/if}>
+            <input class="filter-input" type="checkbox" id="stateInProgress"
+                   name="stateInProgress"{if $stateInProgress} checked{/if}>
             <label class="checkbox" for="stateInProgress">{s namespace="blauband/mail" name="in_progress"}{/s}</label>
         </div>
     </div>
 </div>
 
-<div class="cta-row">
-    <div class="two-cols">
+{if $showSystemMailFilter}
+    <div class="cta-row">
+        <div class="two-cols">
 
-    </div>
-    <div class="two-cols">
-        <div class="checkbox-wrapper">
-            <input class="filter-input" type="checkbox" id="showSystemMail" name="showSystemMail"{if $showSystemMail} checked{/if}>
-            <label class="checkbox" for="showSystemMail">{s namespace="blauband/mail" name="showSystemMail"}{/s}</label>
+        </div>
+        <div class="two-cols">
+            <div class="checkbox-wrapper">
+                <input class="filter-input" type="checkbox" id="showSystemMail"
+                       name="showSystemMail"{if $showSystemMail} checked{/if}>
+                <label class="checkbox"
+                       for="showSystemMail">{s namespace="blauband/mail" name="showSystemMail"}{/s}</label>
+            </div>
         </div>
     </div>
-</div>
+{/if}
