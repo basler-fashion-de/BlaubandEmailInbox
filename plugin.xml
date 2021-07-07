@@ -8,7 +8,16 @@
     <license>proprietary</license>
     <link>www.blauband.com</link>
     <author>Blauband GmbH</author>
-
+    <description lang="de">
+        <![CDATA[
+			Mit diesem Premium-Feature empfangen Sie alle Kunden-E-Mails direkt in Ihrem Shopware-Shop, erhalten eine Übersicht über alle E-Mails, können Emails markieren und beantworten.
+        ]]>
+    </description>
+    <description lang="en">
+        <![CDATA[
+			With this premium feature you can receive all emails from clients directly in your Shopware shop and have them listed with the option to mark and answer them.
+        ]]>
+    </description>
     <compatibility minVersion="5.2.7" />
 
     <changelog version="1.1.1">
